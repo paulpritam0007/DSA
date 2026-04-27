@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DSA Forge — Master Data Structures & Algorithms</title>
+<title>DSA Matters — Master Data Structures & Algorithms</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
@@ -162,140 +162,158 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-body);min-hei
   white-space:nowrap;flex-shrink:0;
 }
 
-/* ══════════════════════ HERO — NETFLIX STYLE ══════════════════════ */
+/* ══════════════════════ CINEMATIC HERO ══════════════════════ */
+/* ══════════════════════ CINEMATIC HERO ══════════════════════ */
 .hero {
   position: relative;
-  min-height: calc(100vh - 64px);
-  max-height: 900px;
+  min-height: 90vh;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-end;
-  padding: 0 6% 72px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 24px;
   overflow: hidden;
+  text-align: center;
 }
 
-/* Netflix-style green lines canvas background */
+/* Cinematic Mesh Gradient Background */
 .hero-canvas-bg {
   position: absolute;
   inset: 0;
   z-index: 0;
+  background: radial-gradient(circle at 50% 50%, #111 0%, #080808 100%);
 }
 
-/* Vignette overlay like Netflix */
+.hero-mesh {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(45, 212, 191, 0.05) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(124, 111, 255, 0.08) 0px, transparent 50%),
+    radial-gradient(at 50% 100%, rgba(34, 197, 94, 0.05) 0px, transparent 50%);
+  filter: blur(80px);
+  z-index: 1;
+}
+
 .hero-vignette {
   position: absolute;
   inset: 0;
-  z-index: 1;
-  background: 
-    linear-gradient(to right, rgba(8,8,8,0.85) 0%, rgba(8,8,8,0.4) 50%, transparent 100%),
-    linear-gradient(to top, rgba(8,8,8,1) 0%, rgba(8,8,8,0.5) 30%, transparent 60%);
+  z-index: 2;
+  background: radial-gradient(circle, transparent 20%, #080808 100%);
 }
 
 .hero-content {
   position: relative;
-  z-index: 2;
-  max-width: 680px;
+  z-index: 10;
+  max-width: 900px;
+  animation: heroReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes heroReveal {
+  from { opacity: 0; transform: translateY(30px); filter: blur(10px); }
+  to { opacity: 1; transform: translateY(0); filter: blur(0); }
 }
 
 .hero-eyebrow {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10px;
   color: var(--green);
-  letter-spacing: 3px;
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  letter-spacing: 5px;
+  margin-bottom: 24px;
   text-transform: uppercase;
-}
-
-.hero-eyebrow::before {
-  content: '';
-  width: 32px;
-  height: 1px;
-  background: var(--green);
-  display: inline-block;
+  opacity: 0.8;
 }
 
 .hero h1 {
   font-family: var(--font-display);
-  font-size: clamp(40px, 5.5vw, 80px);
+  font-size: clamp(48px, 8vw, 110px);
   font-weight: 800;
-  line-height: 1;
-  letter-spacing: -2px;
-  margin-bottom: 20px;
+  line-height: 0.95;
+  letter-spacing: -4px;
+  margin-bottom: 32px;
   color: #fff;
 }
 
-.hero h1 .line2 {
+/* Flicker Animation for "MATTERS" */
+.flicker {
   display: block;
-  color: var(--green);
+  background: linear-gradient(to bottom, #fff 40%, rgba(255,255,255,0.5));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textFlicker 4s linear infinite;
+}
+
+@keyframes textFlicker {
+  0%, 18%, 22%, 25%, 53%, 57%, 100% {
+    opacity: 1;
+    text-shadow: 0 0 4px rgba(255,255,255,0.2);
+  }
+  20%, 24%, 55% {
+    opacity: 0.3;
+    text-shadow: none;
+  }
 }
 
 .hero-sub {
-  font-size: clamp(14px, 1.4vw, 17px);
+  font-size: clamp(16px, 1.2vw, 20px);
   color: var(--text2);
-  max-width: 520px;
-  margin-bottom: 36px;
-  line-height: 1.65;
+  max-width: 600px;
+  margin: 0 auto 48px;
+  line-height: 1.6;
+  font-weight: 300;
+  letter-spacing: 0.2px;
 }
 
-.hero-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.hero-actions { 
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  gap: 20px; 
+}
 
 .hero-cta {
-  background: var(--green);
+  background: #fff;
   color: #000;
-  padding: 14px 28px;
-  border-radius: 4px;
+  padding: 18px 40px;
+  border-radius: 100px;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 15px;
   border: none;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  transition: all 0.2s;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   font-family: var(--font-display);
-  letter-spacing: 0.5px;
 }
 
 .hero-cta:hover {
-  background: var(--green3);
-  transform: scale(1.02);
+  transform: scale(1.05) translateY(-2px);
+  box-shadow: 0 20px 40px rgba(255,255,255,0.1);
 }
 
 .hero-cta-secondary {
-  background: rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.03);
   color: #fff;
-  padding: 14px 28px;
-  border-radius: 4px;
-  font-weight: 700;
-  font-size: 14px;
-  border: 1px solid rgba(255,255,255,0.2);
+  padding: 18px 40px;
+  border-radius: 100px;
+  font-weight: 600;
+  font-size: 15px;
+  border: 1px solid rgba(255,255,255,0.1);
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  transition: all 0.2s;
-  font-family: var(--font-display);
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s;
 }
 
-.hero-cta-secondary:hover { background: rgba(255,255,255,0.2); }
+.hero-cta-secondary:hover { 
+  background: rgba(255,255,255,0.08); 
+  border-color: rgba(255,255,255,0.3);
+}
 
-/* PROGRESS TRACKER CARD */
 .progress-card {
-  background: rgba(20,20,20,0.9); 
-  border: 1px solid rgba(34,197,94,0.2);
-  border-radius: var(--radius); padding: 18px 22px;
-  display: flex; align-items: center; gap: 18px;
-  backdrop-filter: blur(12px);
+  margin-top: 60px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.05);
+  padding: 12px 24px;
+  border-radius: 100px;
+  backdrop-filter: blur(20px);
 }
-.progress-ring-container { position: relative; width: 52px; height: 52px; flex-shrink:0; }
-.progress-text-label { font-family: var(--font-mono); font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 1px; }
-.progress-count { font-family: var(--font-display); font-size: 20px; font-weight: 800; color: var(--green); }
-
 /* ══════════════════════ STATS BAR ══════════════════════ */
 .stats {
   display:flex;justify-content:center;gap:0;
@@ -905,6 +923,32 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-body);min-hei
   .lang-btn { padding: 4px 8px; font-size: 11px; }
   .ide-nav-btn { display: none; }
 }
+@media (max-width: 768px) {
+  /* Prevent horizontal overflow from code blocks */
+  .code-block-wrap pre code {
+    white-space: pre-wrap; 
+    word-break: break-all;
+    font-size: 11px; /* Slightly smaller for mobile screens */
+  }
+
+  /* Improve touch targets for mobile fingers */
+  .phase-filter, .lang-btn, .back-btn {
+    padding: 12px 20px;
+    margin-bottom: 5px;
+  }
+
+  /* Ensure the IDE panel doesn't get cut off */
+  .ide-panel {
+    height: 100%;
+    margin: 0;
+    border-radius: 0;
+  }
+  
+  /* Fix for mobile keyboard pushing content up */
+  .ide-textarea {
+    font-size: 16px !important; /* Prevents iOS/Android auto-zoom on focus */
+  }
+}
 </style>
 </head>
 <body>
@@ -990,7 +1034,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-body);min-hei
 
 <div id="home-screen">
   <nav class="nav">
-    <div class="logo">DSA<span>Forge</span></div>
+    <div class="logo">DSA<span>Matters</span></div>
     <div class="nav-links">
       <a href="#">Roadmap</a>
       <a href="#">Problems</a>
@@ -1000,47 +1044,46 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-body);min-hei
   </nav>
 
   <section class="hero">
-    <canvas class="hero-canvas-bg" id="heroCanvas"></canvas>
-    <div class="hero-vignette"></div>
+  <div class="hero-canvas-bg"></div>
+  <div class="hero-mesh"></div>
+  <div class="hero-vignette"></div>
+  
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      Precision Engineering for the Mind
+    </div>
     
-    <div class="hero-content">
-      <div class="hero-eyebrow">
-        SYSTEM ONLINE · 25 ALGORITHMIC MODULES LOADED
-      </div>
-      
-      <h1>
-        FORGE YOUR<br>
-        <span class="line2">LOGIC ARCHITECTURE.</span>
-      </h1>
-      
-      <p class="hero-sub">Initialize your path through Data Structures &amp; Algorithms. Execute code in 4 languages, take quizzes, and practice in the built-in IDE — all in one place.</p>
+    <h1>
+      DSA<br>
+      <span class="flicker">MATTERS.</span>
+    </h1>
+    
+    <p class="hero-sub">Master the logic that powers the world's most complex systems. A cinematic approach to Data Structures and Algorithms.</p>
 
-      <div class="hero-actions">
-        <button class="hero-cta" onclick="document.getElementById('topics-grid').scrollIntoView({behavior:'smooth'})">
-          EXECUTE SYLLABUS
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </button>
-        <button class="hero-cta-secondary" onclick="openIDE(null)">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-          Open IDE
-        </button>
-      </div>
+    <div class="hero-actions">
+      <button class="hero-cta" onclick="document.getElementById('topics-grid').scrollIntoView({behavior:'smooth'})">
+        Start Training
+      </button>
+      <button class="hero-cta-secondary" onclick="openIDE(null)">
+        Open Playground
+      </button>
+    </div>
 
-      <div class="progress-card" style="margin-top:28px;display:inline-flex;">
-        <div class="progress-ring-container">
-          <svg viewBox="0 0 36 36" style="width:100%;height:100%;">
-            <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#1a1a1a" stroke-width="3"/>
-            <path id="hero-progress-ring" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#22c55e" stroke-width="3" stroke-dasharray="0,100"/>
-          </svg>
-        </div>
-        <div>
-          <div class="progress-text-label">Progress</div>
-          <div class="progress-count"><span id="completed-count">0</span>/25 <small style="font-size:12px;color:var(--text3);">Topics</small></div>
-        </div>
+    <div class="progress-card" style="display:inline-flex; align-items:center; gap:15px;">
+      <div class="progress-ring-container" style="width:30px; height:30px;">
+        <svg viewBox="0 0 36 36">
+          <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="3"/>
+          <path id="hero-progress-ring" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#22c55e" stroke-width="3" stroke-dasharray="0,100"/>
+        </svg>
+      </div>
+      <div style="text-align: left;">
+        <span id="completed-count" style="color: #fff; font-weight: 700; font-family: var(--font-mono); font-size: 14px;">0</span>
+        <span style="color: var(--text3); font-size: 11px; text-transform: uppercase; letter-spacing: 1px;"> / 25 Modules Optimized</span>
       </div>
     </div>
-  </section>
-
+  </div>
+</section>
+      
   <section class="topics-section" style="background:var(--bg2);border-top:1px solid var(--border);padding:48px 48px 40px;">
     <div class="section-header">
       <h2>Pro-Tips for Mastery</h2>
@@ -3343,7 +3386,7 @@ public class Practice {
     default: `public class Practice {
     public static void main(String[] args) {
         // Write your code here
-        System.out.println("Hello, DSA Forge!");
+        System.out.println("Hello, DSA Matters!");
     }
 }`
   },
@@ -3362,7 +3405,7 @@ print(f"Maximum: {max_val}")
 # Challenge: Now try finding the second maximum!
 # Your code here:`,
     default: `# Write your code here
-print("Hello, DSA Forge!")`
+print("Hello, DSA Matters!")`
   },
   cpp: {
     arrays: `#include <iostream>
@@ -3391,7 +3434,7 @@ using namespace std;
 
 int main() {
     // Write your code here
-    cout << "Hello, DSA Forge!" << endl;
+    cout << "Hello, DSA Matters!" << endl;
     return 0;
 }`
   },
@@ -3410,7 +3453,7 @@ console.log("Maximum:", max);
 // Challenge: Now try finding the second maximum!
 // Your code here:`,
     default: `// Write your code here
-console.log("Hello, DSA Forge!");`
+console.log("Hello, DSA Matters!");`
   }
 };
 
