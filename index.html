@@ -833,11 +833,12 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-body);min-hei
   
   /* Hero — full-screen left-aligned */
   .hero {
+    min-height: calc(100vh - 64px); /* Fallback */
     min-height: calc(100svh - 64px);
     max-height: none;
-    padding: 0 20px 56px;
+    padding: 40px 20px 60px; /* Better padding for phone */
     align-items: flex-start;
-    justify-content: flex-end;
+    justify-content: center; /* Center horizontally/vertically */
   }
   .hero h1 { font-size: clamp(36px, 10vw, 56px); letter-spacing: -1.5px; }
   .hero-sub { font-size: 14px; }
@@ -916,7 +917,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-body);min-hei
   </div>
 </div>
 
-<!-- IDE PANEL OVERLAY -->
 <div class="ide-overlay" id="ideOverlay">
   <div class="ide-panel">
     <div class="ide-header">
@@ -1005,7 +1005,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-body);min-hei
     
     <div class="hero-content">
       <div class="hero-eyebrow">
-        SYSTEM ONLINE · 24 ALGORITHMIC MODULES LOADED
+        SYSTEM ONLINE · 25 ALGORITHMIC MODULES LOADED
       </div>
       
       <h1>
@@ -1035,7 +1035,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-body);min-hei
         </div>
         <div>
           <div class="progress-text-label">Progress</div>
-          <div class="progress-count"><span id="completed-count">0</span>/24 <small style="font-size:12px;color:var(--text3);">Topics</small></div>
+          <div class="progress-count"><span id="completed-count">0</span>/25 <small style="font-size:12px;color:var(--text3);">Topics</small></div>
         </div>
       </div>
     </div>
@@ -1063,7 +1063,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font-body);min-hei
   </section>
 
   <div class="stats">
-    <div class="stat"><div class="num">24</div><div class="label">Core Topics</div></div>
+    <div class="stat"><div class="num">25</div><div class="label">Core Topics</div></div>
     <div class="stat"><div class="num">4</div><div class="label">Languages</div></div>
     <div class="stat"><div class="num">200+</div><div class="label">Code Examples</div></div>
     <div class="stat"><div class="num">120+</div><div class="label">Quiz Questions</div></div>
@@ -1128,6 +1128,12 @@ const TOPICS = [
     desc:'The foundation of everything. Indexing, traversal, 2D arrays, insertion, deletion.',
     tc:'O(1) access', sc:'O(n)',
     order:1
+  },
+  {
+    id:'paradigms', phase:'beginner', icon:'💡', title:'Algorithmic Paradigms',
+    desc:'The 8 fundamental algorithmic methods in Java, from Brute Force to Branch & Bound.',
+    tc:'—', sc:'—',
+    order:1.5
   },
   {
     id:'strings', phase:'beginner', icon:'🔤', title:'Strings',
@@ -1280,6 +1286,158 @@ function getContent(topicId, lang) {
 }
 
 const CONTENT_DB = {
+  paradigms: (lang) => ({
+    title: 'Algorithmic Paradigms',
+    subtitle: 'The primary algorithmic methods used in Java. Learn these in order to build a strong foundation in problem-solving approaches.',
+    sections: [
+      {
+        heading: '1. Brute Force (The Starting Point)',
+        body: 'Concept: Exhaustively checking every single possibility until a solution is found.\n\nPros/Cons: Simple to implement but usually very slow (high time complexity).',
+        code: {
+          java: `// Using nested for loops to find a pair of numbers that sum to a target
+int[] arr = {1, 2, 3, 4, 5};
+int target = 7;
+for (int i = 0; i < arr.length; i++) {
+    for (int j = i + 1; j < arr.length; j++) {
+        if (arr[i] + arr[j] == target) {
+            System.out.println("Found: " + arr[i] + ", " + arr[j]);
+        }
+    }
+}`
+        }
+      },
+      {
+        heading: '2. Recursion',
+        body: 'Concept: A method that calls itself to solve smaller instances of the same problem.\n\nNote: Often used as a building block for more advanced methods like Backtracking.',
+        code: {
+          java: `// Calculating factorials
+int factorial(int n) {
+    if (n <= 1) return 1;
+    return n * factorial(n - 1);
+}`
+        }
+      },
+      {
+        heading: '3. Divide and Conquer',
+        body: 'Concept: Breaking a problem into smaller sub-problems, solving them independently, and then combining their results.\n\nExamples: Arrays.sort() (uses Merge/Quick sort logic), Binary Search.',
+        code: {
+          java: `// Binary Search (splitting the search range in half each time)
+int binarySearch(int[] arr, int target, int low, int high) {
+    if (low > high) return -1;
+    int mid = low + (high - low) / 2;
+    
+    if (arr[mid] == target) return mid;
+    if (arr[mid] > target) return binarySearch(arr, target, low, mid - 1);
+    
+    return binarySearch(arr, target, mid + 1, high);
+}`
+        }
+      },
+      {
+        heading: '4. Greedy Algorithms',
+        body: 'Concept: Making the "locally optimal" choice at each step with the hope of finding the global optimum. It never reconsiders previous choices.\n\nExamples: Dijkstra’s Algorithm, Huffman Coding, The Coin Change problem.',
+        code: {
+          java: `// Coin Change problem (Greedy approach for standard denominations)
+int[] coins = {25, 10, 5, 1};
+int amount = 67;
+int count = 0;
+
+for (int coin : coins) {
+    count += amount / coin;
+    amount %= coin;
+}
+System.out.println("Total coins needed: " + count);`
+        }
+      },
+      {
+        heading: '5. Dynamic Programming (DP)',
+        body: 'Concept: Similar to Divide and Conquer, but it stores the results of sub-problems (Memoization) so they don\'t have to be re-calculated.\n\nExamples: Calculating Fibonacci numbers efficiently, Knapsack Problem, Longest Common Subsequence.',
+        code: {
+          java: `// Calculating Fibonacci numbers efficiently (Memoization)
+int[] memo = new int[100];
+
+int fib(int n) {
+    if (n <= 1) return n;
+    if (memo[n] != 0) return memo[n]; // Return stored result
+    
+    memo[n] = fib(n - 1) + fib(n - 2);
+    return memo[n];
+}`
+        }
+      },
+      {
+        heading: '6. Backtracking',
+        body: 'Concept: A refined version of Brute Force. It tries to build a solution incrementally, but as soon as it determines that a path cannot lead to a valid solution, it "backtracks" (abandons that path).\n\nExamples: Solving a Sudoku puzzle, The N-Queens problem, Generating all permutations of a string.',
+        code: {
+          java: `// Generating all permutations of a string (Conceptual)
+void permute(String str, String ans) {
+    if (str.length() == 0) {
+        System.out.println(ans);
+        return;
+    }
+    for (int i = 0; i < str.length(); i++) {
+        char ch = str.charAt(i);
+        String ros = str.substring(0, i) + str.substring(i + 1);
+        permute(ros, ans + ch);
+    }
+}`
+        }
+      },
+      {
+        heading: '7. Randomized Algorithms',
+        body: 'Concept: Using a degree of randomness to find a solution (often faster than deterministic algorithms).\n\nExamples: Randomized Quick Sort, Monte Carlo simulations.',
+        code: {
+          java: `// Randomized Quick Sort (picking a random pivot to avoid worst-case)
+int partition(int[] arr, int low, int high) {
+    int randomPivot = low + (int)(Math.random() * (high - low + 1));
+    
+    // Swap random pivot with the end
+    int temp = arr[randomPivot];
+    arr[randomPivot] = arr[high];
+    arr[high] = temp;
+    
+    // Proceed with standard partition...
+    return standardPartition(arr, low, high);
+}`
+        }
+      },
+      {
+        heading: '8. Branch and Bound',
+        body: 'Concept: Generally used for optimization problems. It explores branches of a state-space tree but uses "bounds" to prune branches that cannot produce a better solution than the one already found.\n\nExample: Solving the Traveling Salesperson Problem (TSP).',
+        code: {
+          java: `// Branch and Bound (conceptual structure for TSP)
+void solveTSP(Node current) {
+    if (current.isComplete() && current.cost < bestCost) {
+        bestCost = current.cost;
+        return;
+    }
+    for (Node child : current.getChildren()) {
+        // Prune branches that exceed our best known cost (the "Bound")
+        if (child.lowerBoundEstimate() < bestCost) {
+            solveTSP(child); // The "Branch"
+        }
+    }
+}`
+        }
+      }
+    ],
+    quiz: [
+      {
+        q: 'Which algorithmic paradigm builds a solution incrementally and abandons paths that fail to lead to a valid solution?',
+        code: null,
+        opts: ['Greedy', 'Divide and Conquer', 'Backtracking', 'Branch and Bound'],
+        ans: 2,
+        exp: 'Backtracking explores potential solutions step-by-step and "backtracks" the moment it determines the current path is invalid (like in Sudoku or N-Queens).'
+      },
+      {
+        q: 'What is the primary difference between Dynamic Programming and pure Divide & Conquer?',
+        code: null,
+        opts: ['DP is slower', 'DP uses randomness', 'DP stores results of overlapping subproblems', 'Divide & Conquer uses iteration'],
+        ans: 2,
+        exp: 'Dynamic Programming optimizes recursion by storing previously calculated results (Memoization/Tabulation) to avoid repeating work on overlapping subproblems.'
+      }
+    ]
+  }),
   arrays: (lang) => ({
     title: 'Arrays',
     subtitle: 'The most fundamental data structure — contiguous memory, O(1) access by index. Everything in DSA builds on this.',
@@ -1993,8 +2151,7 @@ print(max_subarray_sum(arr))  # 6`,
       },
       {
         q: 'Given prefix = [3, 4, 8, 9, 14, 23], what is rangeSum(2, 5)?',
-        code: `// prefix[i] = sum of arr[0..i]
-// rangeSum(l, r) = prefix[r] - prefix[l-1]`,
+        code: `// prefix[i] = sum of arr[0..i]\n// rangeSum(l, r) = prefix[r] - prefix[l-1]`,
         opts: ['23', '14', '19', '17'],
         ans: 2,
         exp: 'rangeSum(2, 5) = prefix[5] - prefix[1] = 23 - 4 = 19. The prefix array lets us answer any range sum in O(1) after the O(n) build.'
@@ -2733,10 +2890,7 @@ function fibMemo(n) {
       },
       {
         q: 'What is the time complexity of naive recursive Fibonacci without memoization?',
-        code: `function fib(n) {
-  if (n <= 1) return n;
-  return fib(n-1) + fib(n-2);
-}`,
+        code: `function fib(n) {\n  if (n <= 1) return n;\n  return fib(n-1) + fib(n-2);\n}`,
         opts: ['O(n)', 'O(n log n)', 'O(2^n)', 'O(n²)'],
         ans: 2,
         exp: 'Each call spawns 2 more calls, creating a binary tree of calls. The tree has depth n and roughly 2^n nodes, giving O(2^n) time. With memoization this drops to O(n).'
